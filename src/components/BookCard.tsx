@@ -1,5 +1,5 @@
 import { Book } from "../types/book";
-import { FaEdit } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 
 interface BookCardProps {
   book: Book;
@@ -8,7 +8,7 @@ interface BookCardProps {
 
 export default function BookCard({ book, openModal }: BookCardProps) {
   return (
-    <div className="relative group w-full h-64 rounded-md overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+    <div className="relative group w-full h-64 rounded-md overflow-hidden shadow-md hover:shadow-2xl hover:shadow-sky-900 transition-shadow duration-300">
       <img
         src={book.imageFile as string}
         alt={book.title}
@@ -37,10 +37,10 @@ export default function BookCard({ book, openModal }: BookCardProps) {
       </div>
       <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <button
-          className="bg-sky-500 text-sky-100 p-2 rounded-full hover:bg-sky-400"
+          className="bg-sky-500 font-semibold text-white p-2 rounded-full hover:bg-sky-400"
           onClick={openModal}
         >
-          <FaEdit size={16} />
+          <MdEdit size={16} />
         </button>
       </div>
     </div>

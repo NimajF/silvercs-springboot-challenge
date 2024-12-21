@@ -3,6 +3,7 @@ import { Book } from "../types/book";
 import axios from "axios";
 import formValidator from "../utils/formValidator";
 import { uploadImage } from "../utils/imageHandler";
+import { motion } from "framer-motion";
 
 interface ModalProps {
   onClose: () => void;
@@ -66,7 +67,12 @@ export default function FormModal({ onClose, updateList }: ModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-slate-800 border border-slate-800 backdrop-blur-md bg-opacity-60 rounded-lg shadow-lg p-8 w-1/3 max-lg:w-2/3 max-sm:w-full">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2, delay: 0.1 }}
+        className="bg-slate-800 border border-slate-800 backdrop-blur-md bg-opacity-60 rounded-lg shadow-lg p-8 w-1/3 max-lg:w-2/3 max-sm:w-full"
+      >
         <h2 className="text-2xl font-bold mb-6 text-slate-100">
           Create a New Book
         </h2>
@@ -191,7 +197,7 @@ export default function FormModal({ onClose, updateList }: ModalProps) {
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 }

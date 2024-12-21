@@ -4,6 +4,7 @@ import { Book } from "../types/book";
 import BookCard from "./BookCard";
 import FormEditModal from "./FormEditModal";
 import { useUpdateList } from "../context/BookContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function BooksList() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -46,22 +47,49 @@ export default function BooksList() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen py-8 px-4">
-      {isModalOpen ? (
+    <motion.div
+      className="flex flex-col justify-center items-center min-h-screen py-8 px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {isModalOpen && (
         <FormEditModal book={bookToEdit as Book} onClose={handleCloseModal} />
-      ) : null}
-      <h1 className="mt-5 text-4xl font-bold text-center text-gray-200 mb-6">
+      )}
+
+      <motion.h1
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="mt-5 text-4xl font-bold text-center text-gray-200 mb-6"
+      >
         Search the best Programming Books!
-      </h1>
-      <div className="w-2/3 py-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {books.map((book) => (
-          <BookCard
-            key={book.id}
-            book={book}
-            openModal={() => handleOpenModal(book)}
-          />
-        ))}
-      </div>
-    </div>
+      </motion.h1>
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.7 }}
+        className="w-2/3 py-5 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8"
+      >
+        <AnimatePresence>
+          {books.map((book, idx) => (
+            <motion.div
+              key={book.id}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              transition={{
+                duration: 0.4,
+                delay: 1 + idx * 0.1,
+              }}
+            >
+              <BookCard book={book} openModal={() => handleOpenModal(book)} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
   );
 }
